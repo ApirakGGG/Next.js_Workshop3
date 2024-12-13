@@ -5,6 +5,7 @@ import { NextAuthProvider } from "./components/Providers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./lib/auth";
 import Image from "next/image";
+import { Logout, Login } from "./components/Button";
 
 const poppins = Poppins({
   weight: ["500", "600"],
@@ -46,11 +47,11 @@ export default async function RootLayout({
                   className="w-12 h-12 rounded-full mr-3"
                 />
                 {/*Logout Button */}
-                <button onClick={() => {}}>Logout</button>
+                <Logout />
               </div>
             ) : (
               // เมื่อไม่มี session แสดง Login button
-             <button onClick={() => {}}>Login</button>
+             <Login />
             )}
           </nav>
           <main>{children}</main>
