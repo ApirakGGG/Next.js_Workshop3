@@ -5,7 +5,8 @@ import { NextAuthProvider } from "./components/Providers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./lib/auth";
 import Image from "next/image";
-import { Logout, Login } from "./components/Button";
+import { Login } from "./components/Button";
+import ToggleModal from "./components/ToggleModal";
 
 const poppins = Poppins({
   weight: ["500", "600"],
@@ -37,21 +38,21 @@ export default async function RootLayout({
 
             {/* ตรวจสอบsession ถ้ามีให้แสดงProfiles ถ้าไม่มีแสดง Button SignIn */}
             {session ? (
-              <div className="flex items-center">
+              <div className="flex items-center gap-2">
                 {/* profiles user เมื่อมีการ SignIn */}
                 <Image
                   src={session.user?.image as string}
                   alt="User Image"
-                  width={50}
-                  height={50}
-                  className="w-12 h-12 rounded-full mr-3"
+                  width={40}
+                  height={40}
+                  className="w-10 h-10 rounded-full"
                 />
-                {/*Logout Button */}
-                <Logout />
+                {/* Toggle */}
+                <ToggleModal />
               </div>
             ) : (
               // เมื่อไม่มี session แสดง Login button
-             <Login />
+              <Login />
             )}
           </nav>
           <main>{children}</main>
@@ -60,3 +61,5 @@ export default async function RootLayout({
     </html>
   );
 }
+
+//36:00
