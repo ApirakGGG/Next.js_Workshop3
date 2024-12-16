@@ -19,7 +19,7 @@ const ToggleModal = () => {
           <IoIosArrowDown className="w-5 h-5" />
         </PopoverButton>
         <PopoverPanel
-          transition
+          transition // transition ทำให้เปิดแบบ smooth
           // -left ทำให้ขยับออกจากขอบจอ
           // -right ทำให้ขยับออกจากขอบจอ
           className="absolute -left-40 z-10 mt-8 -translate-x-1/2 px-4 transition
@@ -33,7 +33,7 @@ const ToggleModal = () => {
                 <div className="mt-1 flex gap-2 items-center justify-center rounded-lg">
                   <div className=" items-center gap-2">
                   <p className="font-bold py-2">Logout</p>
-                  <div className="flex items-center gap-2">
+                  <div className="flex mx-auto items-center gap-2 ">
                       {/* Logout icon */}
                       <CiLogout className="w-6 h-6" />
                     {/* logout button */}
