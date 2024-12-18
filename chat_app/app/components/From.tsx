@@ -1,10 +1,15 @@
 "use client";
 import React from "react";
+import { PostData } from "../action/Post_Data";
 
 const From = () => {
   return (
     <>
-      <form className="p-6 fixed bottom-0 left-0 w-full bg-white">
+      <form action={
+        async (fromData) => {
+          await PostData(fromData);
+        }
+      } className="p-6 fixed bottom-0 left-0 w-full bg-white">
         <div className="flex">
           <input
             type="text"
