@@ -1,13 +1,18 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
 import { PostData } from "../action/Post_Data";
 
 const From = () => {
+// กำหนดRef อ้างอิงElement
+const fromRef = useRef<HTMLFormElement>(null);
+
   return (
     <>
       <form action={
         async (fromData) => {
           await PostData(fromData);
+          // reset from
+          fromRef.current?.reset();
         }
       } className="p-6 fixed bottom-0 left-0 w-full bg-white">
         <div className="flex">

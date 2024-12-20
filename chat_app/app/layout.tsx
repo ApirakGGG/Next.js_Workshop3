@@ -38,7 +38,7 @@ export default async function RootLayout({
 
             {/* ตรวจสอบsession ถ้ามีให้แสดงProfiles ถ้าไม่มีแสดง Button SignIn */}
             {session ? (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 {/* profiles user เมื่อมีการ SignIn */}
                 <Image
                   src={session.user?.image as string}
@@ -47,6 +47,8 @@ export default async function RootLayout({
                   height={40}
                   className="w-10 h-10 rounded-full"
                 />
+                {/* profiles name */}
+                <p className="">{session.user?.name}</p>
                 {/* Toggle */}
                 <ToggleModal />
               </div>
@@ -61,5 +63,3 @@ export default async function RootLayout({
     </html>
   );
 }
-
-

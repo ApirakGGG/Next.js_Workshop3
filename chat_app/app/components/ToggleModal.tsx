@@ -27,12 +27,12 @@ const ToggleModal = () => {
         "
         >
           {/* max-w กำหนดขอบPopover */}
-          <div className="w-screen max-w-[35vh] flex-auto overflow-hidden rounded-3xl bg-white text-sm/6 shadow-lg ring-1 ring-gray-900/5">
+          <div className="w-screen max-w-[35vh] border-2 border-slate-300 flex-auto overflow-hidden rounded-3xl bg-white text-sm/6 shadow-lg ring-1 ring-gray-900/5">
             <div className="p-4">
               <div className="grop relative flex gap-x-6 p-3 rounded-lg">
                 <div className="mt-1 flex gap-2 items-center justify-center rounded-lg">
                   <div className=" items-center gap-2">
-                  <p className="font-bold py-2">Logout</p>
+                  <p className="font-bold py-2 items-center ml-10">Logout</p>
                   <div className="flex mx-auto items-center gap-2 ">
                       {/* Logout icon */}
                       <CiLogout className="w-6 h-6" />
