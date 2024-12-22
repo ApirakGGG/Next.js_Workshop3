@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Account {
@@ -60,9 +61,10 @@ model VerificationToken {
 }
 
 model Message {
-  id      String  @id @default(uuid())
-  message String
-  User    User?   @relation(fields: [email], references: [email])
-  email   String
+  id        String   @id @default(uuid())
+  message   String
+  imageUrl  String? //image upload
+  User      User?    @relation(fields: [email], references: [email])
+  email     String
   createdAt DateTime @default(now())
 }

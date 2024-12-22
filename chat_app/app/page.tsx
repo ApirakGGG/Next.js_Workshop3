@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { CiLogin } from "react-icons/ci";
-import { MainLogin } from "./components/Button";
+import { MainLogin } from "./component/Button";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./lib/auth";
 import { redirect } from "next/navigation";

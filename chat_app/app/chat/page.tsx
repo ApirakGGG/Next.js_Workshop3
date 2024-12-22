@@ -2,18 +2,19 @@ import React from "react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../lib/auth";
 import { redirect } from "next/navigation";
-import From from "../components/From";
-import PostChat from "../components/PostChat";
+import From from "../component/From";
+import PostChat from "../component/PostChat";
 import { prisma } from "../lib/db";
 
 
-// get message from DB
+// get Data from DB
 async function getData() {
   const data = await prisma.message.findMany({
     select: {
       message: true, //select message
       id: true, //get id
-      createdAt: true,
+      createdAt: true, // Time of created
+      imageUrl: true, //get url image
       User: {
         select: {
           image: true, //get name
@@ -22,9 +23,8 @@ async function getData() {
       },
     },
     orderBy: {
-      createdAt: "asc", //get createdAt
+      createdAt: "asc", //get ข้อมูลตามเวลา 
     },
-    take: 50,
   });
 // return
   return data;
@@ -46,7 +46,7 @@ export default async function ChatPage() {
   return (
     <>
       <div className="h-screen flex flex-col">
-        {/* PostChat */}
+        {/* PostChat ส่ง Props */}
         <PostChat data={data as any} />
         {/* ส่วนของChat */}
         <From />
