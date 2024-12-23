@@ -3,7 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { NextAuthProvider } from "./component/Providers";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./lib/auth";
+import { authOptions } from "../lib/auth";
 import Image from "next/image";
 import { Login } from "./component/Button";
 import ToggleModal from "./component/ToggleModal";

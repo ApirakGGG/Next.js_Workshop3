@@ -1,10 +1,10 @@
 import React from "react";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../lib/auth";
+import { authOptions } from "../../lib/auth";
 import { redirect } from "next/navigation";
 import From from "../component/From";
 import PostChat from "../component/PostChat";
-import { prisma } from "../lib/db";
+import { prisma } from "../../lib/db";
 
 
 // get Data from DB

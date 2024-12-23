@@ -2,7 +2,7 @@ import Image from "next/image";
 import { CiLogin } from "react-icons/ci";
 import { MainLogin } from "./component/Button";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./lib/auth";
+import { authOptions } from "../lib/auth";
 import { redirect } from "next/navigation";
 
 export default async function Home() {

@@ -1,9 +1,9 @@
 "use server";
 
-import { prisma } from "../lib/db";
+import { prisma } from "../../lib/db";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../lib/auth";
-import { supabase } from "../lib/supabaseClient";
+import { authOptions } from "../../lib/auth";
+import { supabase } from "../../lib/supabaseClient";
 
 export async function PostData(fromData: FormData) {
   "use server";
@@ -11,7 +11,7 @@ export async function PostData(fromData: FormData) {
   const Pusher = require("pusher");
 
   // ดึงค่าจาก FormData ที่มีชื่อฟิลด์ message และเก็บไว้ในตัวแปร message
-  const message = fromData.get("message") as string | "" ; // ส่ง message
+  const message = fromData.get("message") as string | null ; // ส่ง message
   const file = fromData.get("image") as File || null; // Uploaded image
 
   // ใช้ session อย่าลืม async await
@@ -61,7 +61,7 @@ export async function PostData(fromData: FormData) {
   // บันทึกข้อมูลลงในฐานข้อมูล Prisma
   const data = await prisma.message.create({ 
     data: {
-      message: message as string , // message 
+      message: message || null , // message 
       email: session?.user?.email as string, // email 
       imageUrl: imageUrl || null, // image
     },

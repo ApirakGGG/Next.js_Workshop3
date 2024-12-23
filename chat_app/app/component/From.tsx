@@ -44,7 +44,7 @@ const From = () => {
     }
 
      // เพิ่มข้อความเฉพาะเมื่อมีข้อความที่ไม่ว่างเปล่า
-     formData.append("message", trimmedMessage || "");
+     formData.append("message", trimmedMessage);
 
     // ส่งข้อมูลไปยัง API
     await PostData(formData);

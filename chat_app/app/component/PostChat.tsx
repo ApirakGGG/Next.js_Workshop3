@@ -5,10 +5,14 @@ import Pusher from "pusher-js";
 import { useSession } from "next-auth/react";
 import { FilePath } from "tailwindcss/types/config";
 import { DialogDemo } from "./DialogDemo";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 
 // interface types
 interface ChatProps {
   data: {
+    id: string;
     User: {
       image: string | null;
       name: string | null;
@@ -29,6 +33,8 @@ export default function PostChat({ data }: ChatProps) {
   const currentUser = session?.user?.name || ""; // เช็คsession
 
   console.log("CurrentUser:", currentUser);
+
+  const router = useRouter();
 
   useEffect(() => {
     //Pusher Configuration
@@ -70,6 +76,19 @@ export default function PostChat({ data }: ChatProps) {
      */
     scrollToBottom();
   }, [totalComments]);
+
+  const deleteMessage = useCallback(
+    async (id: string) => {
+      axios.delete(`/api/message/${id}`)
+      .then((res) => {
+        console.log("Deleted message successfully");
+        router.refresh();
+      });
+      // update ค่าเมื่อลบ message
+      setTotalComments((prev) => prev.filter((message) => message.id !== id));
+    },
+    [router]
+  );
 
   return (
     <div className="p-6 flex-grow max-h-screen overflow-y-auto py-32">
@@ -149,7 +168,10 @@ export default function PostChat({ data }: ChatProps) {
                   {/* ปุ่มลบข้อความ (เฉพาะเจ้าของข้อความ) */}
                   {isCurrentUser && (
                     <div className="relative">
-                      <DialogDemo />
+                      <DialogDemo
+                        messageId={message.id}
+                        deleteMessage={deleteMessage}
+                      />
                     </div>
                   )}
                 </div>

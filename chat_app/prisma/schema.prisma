@@ -62,7 +62,7 @@ model VerificationToken {
 
 model Message {
   id        String   @id @default(uuid())
-  message   String
+  message   String?
   imageUrl  String? //image upload
   User      User?    @relation(fields: [email], references: [email])
   email     String
