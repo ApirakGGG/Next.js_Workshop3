@@ -1,17 +1,18 @@
 "use server";
 import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
-
 /*
  ** API Route (route.ts) ซึ่งถูกตั้งค่าไม่ถูกต้องใน Next.js 13+ (App Router)
  ** เพราะ API Route ของ Next.js ต้องการ Named Export สำหรับแต่ละ HTTP Method
  ** (เช่น GET, POST, DELETE เป็นต้น) และห้ามใช้ Default Export
  */
 
- export async function DELETE(req: Request, { params }: { params: { id: string } }) {
-  const Pusher = require("pusher"); // import
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
   const { id } = params; // ดึงค่าจาก params.id
-
+  const Pusher = require("pusher"); // import
   // pusher configuration
   const pusher = new Pusher({
     appId: process.env.PUSHER_APP_ID,
