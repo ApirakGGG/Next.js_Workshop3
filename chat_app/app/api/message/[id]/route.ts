@@ -14,7 +14,7 @@ export async function DELETE(
 ) {
   const Pusher = require("pusher"); // import
   const { params } = context; // ดึงค่าจาก context
-  const { id } = params; // รอให้ params.id โหลดค่าก่อน
+  const  id  = params.id; // รอให้ params.id โหลดค่าก่อน
 
   // pusher configuration
   const pusher = new Pusher({
