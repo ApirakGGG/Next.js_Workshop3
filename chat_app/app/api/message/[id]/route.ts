@@ -3,19 +3,13 @@ import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
 import Pusher from "pusher"; // ใช้ import แทน require
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
-  const { id } = params; // ดึงค่าจาก params.id
-
-  if (!id) {
-    return NextResponse.json(
-      { success: false, error: "ID is required" },
-      { status: 400 }
-    );
-  }
-
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
   // pusher configuration
   const pusher = new Pusher({
-    appId: process.env.PUSHER_APP_ID as string, 
+    appId: process.env.PUSHER_APP_ID as string,
     key: process.env.NEXT_PUBLIC_PUSHER_KEY as string,
     secret: process.env.PUSHER_SECRET as string,
     cluster: "ap1",
@@ -25,12 +19,12 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
   try {
     // ลบข้อความใน DB
     const message = await prisma.message.delete({
-      where: { id },
+      where: { id: params.id },
     });
 
     // แจ้ง Pusher เพื่ออัปเดต UI ของทุกคน
     await pusher.trigger("my-channel", "delete-message", {
-      id,
+      id: params.id,
     });
 
     // ส่ง response กลับ
