@@ -8,10 +8,7 @@ import { NextResponse } from "next/server";
  ** (เช่น GET, POST, DELETE เป็นต้น) และห้ามใช้ Default Export
  */
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+ export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   const Pusher = require("pusher"); // import
   const { id } = params; // ดึงค่าจาก params.id
 
