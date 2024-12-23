@@ -1,10 +1,11 @@
 "use server";
 import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
+import Pusher from "pusher"; // ใช้ import แทน require
 
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   const { id } = params; // ดึงค่าจาก params.id
-  const Pusher = require("pusher"); // import
+
   if (!id) {
     return NextResponse.json(
       { success: false, error: "ID is required" },
@@ -14,9 +15,9 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
 
   // pusher configuration
   const pusher = new Pusher({
-    appId: process.env.PUSHER_APP_ID,
-    key: process.env.NEXT_PUBLIC_PUSHER_KEY,
-    secret: process.env.PUSHER_SECRET,
+    appId: process.env.PUSHER_APP_ID as string, 
+    key: process.env.NEXT_PUBLIC_PUSHER_KEY as string,
+    secret: process.env.PUSHER_SECRET as string,
     cluster: "ap1",
     useTLS: true,
   });
