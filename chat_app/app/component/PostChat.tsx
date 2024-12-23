@@ -58,6 +58,11 @@ export default function PostChat({ data }: ChatProps) {
       });
     });
 
+    // ฟังก์ชันสำหรับลบข้อความ
+    chanel.bind("delete-message", function (data: { id: string }) {
+      setTotalComments((prev) => prev.filter((msg) => msg.id !== data.id));
+    });
+
     return () => {
       pusher.unsubscribe("my-channel");
     };
@@ -79,8 +84,7 @@ export default function PostChat({ data }: ChatProps) {
 
   const deleteMessage = useCallback(
     async (id: string) => {
-      axios.delete(`/api/message/${id}`)
-      .then((res) => {
+      axios.delete(`/api/message/${id}`).then((res) => {
         console.log("Deleted message successfully");
         router.refresh();
       });

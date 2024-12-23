@@ -12,13 +12,28 @@ export async function DELETE(
   req: Request,
   context: { params: { id: string } }
 ) {
+  const Pusher = require("pusher"); // import
   const { params } = context; // ดึงค่าจาก context
-  const { id } =  params; // รอให้ params.id โหลดค่าก่อน
+  const { id } = params; // รอให้ params.id โหลดค่าก่อน
+
+  // pusher configuration
+  const pusher = new Pusher({
+    appId: process.env.PUSHER_APP_ID,
+    key: process.env.NEXT_PUBLIC_PUSHER_KEY,
+    secret: process.env.PUSHER_SECRET,
+    cluster: "ap1",
+    useTLS: true,
+  });
 
   try {
     // ลบข้อความในDB
     const message = await prisma.message.delete({
       where: { id }, // รับ ID ของข้อความที่จะลบ
+    });
+
+    // แจ้ง Pusher เพื่ออัปเดต UI ของทุกคน
+    await pusher.trigger("my-channel", "delete-message", {
+      id,
     });
 
     // ส่ง response กลับ
