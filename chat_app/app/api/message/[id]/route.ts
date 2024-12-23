@@ -4,7 +4,8 @@ import { NextResponse } from "next/server";
 import Pusher from "pusher"; 
 
 export async function DELETE(req: Request, context: { params: { id: string } }) {
-  const { id } = context.params; // ดึงค่าจาก params.id
+  // รอ params ให้เสร็จก่อนใช้งาน
+  const { id } = await context.params; // ใช้ await เพื่อรอ params
 
   if (!id) {
     return NextResponse.json(
