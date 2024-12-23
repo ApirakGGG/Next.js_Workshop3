@@ -58,7 +58,7 @@ export default function PostChat({ data }: ChatProps) {
       });
     });
 
-    // ฟังก์ชันสำหรับลบข้อความ
+    // ฟังก์ชันสำหรับลบข้อความ เพื่อ update chat
     chanel.bind("delete-message", function (data: { id: string }) {
       setTotalComments((prev) => prev.filter((msg) => msg.id !== data.id));
     });
