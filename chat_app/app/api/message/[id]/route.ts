@@ -10,11 +10,10 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
   req: Request,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   const Pusher = require("pusher"); // import
-  const { params } = context; // ดึงค่าจาก context
-  const  id  = params.id; // รอให้ params.id โหลดค่าก่อน
+  const { id } = params; // ดึงค่าจาก params.id
 
   // pusher configuration
   const pusher = new Pusher({
