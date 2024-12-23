@@ -1,12 +1,18 @@
 "use server";
 import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
-import Pusher from "pusher"; // ใช้ import แทน require
+import Pusher from "pusher"; 
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(req: Request, context: { params: { id: string } }) {
+  const { id } = context.params; // ดึงค่าจาก params.id
+
+  if (!id) {
+    return NextResponse.json(
+      { success: false, error: "ID is required" },
+      { status: 400 }
+    );
+  }
+
   // pusher configuration
   const pusher = new Pusher({
     appId: process.env.PUSHER_APP_ID as string,
@@ -19,12 +25,12 @@ export async function DELETE(
   try {
     // ลบข้อความใน DB
     const message = await prisma.message.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     // แจ้ง Pusher เพื่ออัปเดต UI ของทุกคน
     await pusher.trigger("my-channel", "delete-message", {
-      id: params.id,
+      id,
     });
 
     // ส่ง response กลับ
