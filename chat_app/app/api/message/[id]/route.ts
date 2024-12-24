@@ -1,11 +1,14 @@
 "use server";
 import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
-import Pusher from "pusher"; 
+import Pusher from "pusher";
 
-export async function DELETE(req: Request, context: { params: { id: string } }) {
-  // รอ params ให้เสร็จก่อนใช้งาน
-  const { id } = await context.params; // ใช้ await เพื่อรอ params
+// ฟังก์ชัน DELETE ที่ใช้ dynamic parameter
+export async function DELETE(
+  req: Request,
+  context: { params: { id: string } }
+) {
+  const { id } = context.params; // ดึงค่าจาก params
 
   if (!id) {
     return NextResponse.json(
@@ -14,7 +17,7 @@ export async function DELETE(req: Request, context: { params: { id: string } }) 
     );
   }
 
-  // pusher configuration
+  // ตั้งค่า Pusher
   const pusher = new Pusher({
     appId: process.env.PUSHER_APP_ID as string,
     key: process.env.NEXT_PUBLIC_PUSHER_KEY as string,
@@ -24,7 +27,7 @@ export async function DELETE(req: Request, context: { params: { id: string } }) 
   });
 
   try {
-    // ลบข้อความใน DB
+    // ลบข้อความจากฐานข้อมูล
     const message = await prisma.message.delete({
       where: { id },
     });
@@ -34,7 +37,7 @@ export async function DELETE(req: Request, context: { params: { id: string } }) 
       id,
     });
 
-    // ส่ง response กลับ
+    // ส่งผลลัพธ์กลับ
     return NextResponse.json({
       success: true,
       message: "Message deleted successfully",
@@ -42,10 +45,12 @@ export async function DELETE(req: Request, context: { params: { id: string } }) 
     });
   } catch (err) {
     console.error("Error deleting message:", err);
-    // ส่ง response error
+    // ส่งข้อผิดพลาดกลับ
     return NextResponse.json(
       { success: false, error: "Failed to delete message" },
       { status: 500 }
     );
   }
 }
+
+

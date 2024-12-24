@@ -8,6 +8,7 @@ import { DialogDemo } from "./DialogDemo";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
+import { EditText } from "./EditMessage";
 
 // interface types
 interface ChatProps {
@@ -63,6 +64,15 @@ export default function PostChat({ data }: ChatProps) {
       setTotalComments((prev) => prev.filter((msg) => msg.id !== data.id));
     });
 
+    // ฟังก์ชันสำหรับแก้ไขข้อความ เพื่อ update chat
+    const channel = pusher.subscribe("my-channel");
+    channel.bind("edit-message", (data: any) => {
+      setTotalComments((prev) =>
+        prev.map((msg) =>
+          msg.id === data.id ? { ...msg, message: data.message } : msg
+        )
+      );
+    });
     return () => {
       pusher.unsubscribe("my-channel");
     };
@@ -86,12 +96,31 @@ export default function PostChat({ data }: ChatProps) {
     async (id: string) => {
       axios.delete(`/api/message/${id}`).then((res) => {
         console.log("Deleted message successfully");
-        router.refresh();
       });
       // update ค่าเมื่อลบ message
       setTotalComments((prev) => prev.filter((message) => message.id !== id));
     },
-    [router]
+    [setTotalComments]
+  );
+
+  const handleEditMessage = useCallback(
+    async (id: string, newMessage: string) => {
+      axios
+        .patch(`/api/editmessage/${id}`, {
+          message: newMessage,
+        })
+        .then((res) => {
+          console.log("Edit message successfully");
+        });
+
+      // อัปเดตข้อความใน state
+      setTotalComments((prev) =>
+        prev.map((msg) =>
+          msg.id === id ? { ...msg, message: newMessage } : msg
+        )
+      );
+    },
+    [setTotalComments]
   );
 
   return (
@@ -171,12 +200,18 @@ export default function PostChat({ data }: ChatProps) {
                   )}
                   {/* ปุ่มลบข้อความ (เฉพาะเจ้าของข้อความ) */}
                   {isCurrentUser && (
-                    <div className="relative">
-                      <DialogDemo
-                        messageId={message.id}
-                        deleteMessage={deleteMessage}
-                      />
-                    </div>
+                    <>
+                      <div className="relative flex gap-1.5 mt-1">
+                        <DialogDemo
+                          messageId={message.id}
+                          deleteMessage={deleteMessage}
+                        />
+                        <EditText
+                          messageId={message.id}
+                          EditMessage={handleEditMessage}
+                        />
+                      </div>
+                    </>
                   )}
                 </div>
 
