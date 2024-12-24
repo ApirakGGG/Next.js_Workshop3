@@ -1,23 +1,11 @@
-'use server'
+"use server";
 import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
 import Pusher from "pusher";
 
-
 // ฟังก์ชัน DELETE ที่ใช้ dynamic parameter
-export async function DELETE(
-  req: Request,
-  context: { params: { id: string } }
-) {
-  const { id } = context.params; // ดึงค่าจาก params
-
-  if (!id) {
-    return NextResponse.json(
-      { success: false, error: "ID is required" },
-      { status: 400 }
-    );
-  }
-
+export async function DELETE(req: Request, params: Promise<{ id: string }>) {
+  const { id } = await params;
   // ตั้งค่า Pusher
   const pusher = new Pusher({
     appId: process.env.PUSHER_APP_ID as string,
@@ -29,7 +17,7 @@ export async function DELETE(
 
   try {
     // ลบข้อความจากฐานข้อมูล
-    const message = await prisma.message.delete({
+    const message = await prisma?.message.delete({
       where: { id },
     });
 

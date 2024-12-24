@@ -23,6 +23,7 @@ export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ id: string }>;
 }>) {
   //ตรวจสอบและดึงข้อมูล session ของผู้ใช้
   const session = await getServerSession(authOptions);

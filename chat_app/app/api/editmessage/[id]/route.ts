@@ -1,17 +1,11 @@
-import { NextResponse } from "next/server";
+"use server";
 import { prisma } from "@/lib/db";
+import { NextResponse } from "next/server";
 import Pusher from "pusher";
 
 // function Method PATCH = update
-export async function PATCH(req: Request, context: { params: { id: string } }) {
-  const { id } = context.params;
-
-  if (!id) {
-    return NextResponse.json(
-      { success: false, error: "ID is required" },
-      { status: 400 }
-    );
-  }
+export async function PATCH(req: Request, params: Promise<{ id: string }>) {
+  const { id } = await params;
 
   // ตั้งค่า Pusher
   const pusher = new Pusher({
@@ -35,7 +29,7 @@ export async function PATCH(req: Request, context: { params: { id: string } }) {
     }
 
     // Update Message
-    const updatedMessage = await prisma.message.update({
+    const updatedMessage = await prisma?.message.update({
       where: { id },
       data: { message },
     });
