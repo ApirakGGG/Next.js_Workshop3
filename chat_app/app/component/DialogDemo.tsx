@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable no-unused-vars */
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

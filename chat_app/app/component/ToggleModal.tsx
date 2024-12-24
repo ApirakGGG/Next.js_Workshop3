@@ -1,16 +1,9 @@
 "use client";
-import React, { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { CiLogout } from "react-icons/ci";
 import { Logout } from "./Button";
 import { Popover, PopoverPanel, PopoverButton } from "@headlessui/react";
 const ToggleModal = () => {
-  const [isOpen, setIsOpen] = useState(false); // State สำหรับควบคุม Modal
-
-  const toggleModal = () => {
-    setIsOpen(!isOpen); // เปลี่ยนสถานะ Modal เป็น เปิด / ปิด
-  };
-
   return (
     <>
       <Popover className="relative">
@@ -32,13 +25,13 @@ const ToggleModal = () => {
               <div className="grop relative flex gap-x-6 p-3 rounded-lg">
                 <div className="mt-1 flex gap-2 items-center justify-center rounded-lg">
                   <div className=" items-center gap-2">
-                  <p className="font-bold py-2 items-center ml-10">Logout</p>
-                  <div className="flex mx-auto items-center gap-2 ">
+                    <p className="font-bold py-2 items-center ml-10">Logout</p>
+                    <div className="flex mx-auto items-center gap-2 ">
                       {/* Logout icon */}
                       <CiLogout className="w-6 h-6" />
-                    {/* logout button */}
-                    <Logout />
-                  </div>
+                      {/* logout button */}
+                      <Logout />
+                    </div>
                   </div>
                 </div>
               </div>

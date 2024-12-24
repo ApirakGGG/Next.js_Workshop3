@@ -1,13 +1,9 @@
-'use server'
-import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/db";
 import Pusher from "pusher";
- 
+
 // function Method PATCH = update
-export async function PATCH(
-  req: Request,
-  context: { params: { id: string } }
-) {
+export async function PATCH(req: Request, context: { params: { id: string } }) {
   const { id } = context.params;
 
   if (!id) {

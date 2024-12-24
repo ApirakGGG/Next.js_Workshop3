@@ -1,21 +1,22 @@
-import { FlatCompat } from "@eslint/eslintrc";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import js from '@eslint/js'
+import { FlatCompat } from '@eslint/eslintrc'
 
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+  // import.meta.dirname is available after Node.js v20.11.0
+  baseDirectory: import.meta.dirname,
+  recommendedConfig: js.configs.recommended,
+})
 
-export default [
-  ...compat.extends("next/core-web-vitals"),
-  ...compat.extends("next/typescript"),
-  {
+const eslintConfig = [
+  ...compat.config({
+    extends: ['eslint:recommended', 'next'],
     rules: {
-      "@typescript-eslint/no-unused-vars": "off", // ปิดการแจ้งเตือน unused variables
-      "react/react-in-jsx-scope": "off", // สำหรับ React 17+
+      "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "react/no-unescaped-entities": "off",
+      "prefer-const": "off",
     },
-  },
-];
+  }),
+]
+
+export default eslintConfig
