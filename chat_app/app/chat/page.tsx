@@ -7,7 +7,7 @@ import PostChat from "../component/PostChat";
 import { prisma } from "../../lib/db";
 
 // get Data from DB
-async function getData() {
+async function GET() {
   const data = await prisma.message.findMany({
     select: {
       message: true, //select message
@@ -28,13 +28,14 @@ async function getData() {
   // return
   return data;
 }
-//Add
-export const dtnamic = "force-dynamic";
+// เปลี่ยนชื่อจาก dtnamic เป็น dynamic
+export const dynamic = "force-dynamic";
+
 
 export default async function ChatPage() {
   const session = await getServerSession(authOptions); // เก็บsession
   // get data
-  const data = await getData();
+  const data = await GET();
   // console.log("Data:", data);
 
   // ถ้าไม่มี session || redirect ไปหน้าHomepage

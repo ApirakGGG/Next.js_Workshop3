@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import Pusher from "pusher";
 
 // ฟังก์ชัน DELETE ที่ใช้ dynamic parameter
-export async function DELETE(req: Request, params: Promise<{ id: string }>) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   // ตั้งค่า Pusher
   const pusher = new Pusher({

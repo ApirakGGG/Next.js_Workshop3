@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import Pusher from "pusher";
 
 // function Method PATCH = update
-export async function PATCH(req: Request, params: Promise<{ id: string }>) {
+export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
   // ตั้งค่า Pusher
