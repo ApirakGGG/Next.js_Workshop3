@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useState } from "react";
 import { IoTrashBin } from "react-icons/io5";
 
 interface DialogProps {
@@ -19,8 +20,18 @@ interface DialogProps {
  * ส่งprops components แม่เพื่อ รับค่าจาก components แม่ สำหรับสร้างfunction
  */
 export function DialogDemo({ messageId, deleteMessage }: DialogProps) {
+   const [isOpen, setIsOpen] = useState(false); // สถานะควบคุมการเปิด/ปิด Dialog
+
+   const handleEdit = async () => {
+    try {
+      await deleteMessage(messageId, ); // เรียกฟังก์ชันแก้ไขข้อความ
+      setIsOpen(false); // ปิด Dialog หลังจากแก้ไขสำเร็จ
+    } catch (error) {
+      console.error("Error editing message:", error);
+    }
+  };
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <button type="submit" className="mt-1.5 ">
           <IoTrashBin className="h-5 w-5" />
@@ -36,7 +47,7 @@ export function DialogDemo({ messageId, deleteMessage }: DialogProps) {
         <DialogFooter>
           {/* // เรียกฟังก์ชันลบข้อความ */}
           <Button type="submit"
-           onClick={() => deleteMessage(messageId)}>
+           onClick={() => handleEdit}>
             <IoTrashBin />
             Delete
           </Button>
