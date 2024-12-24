@@ -9,12 +9,13 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-export default {
-  extends: [
-    ...compat.extends("next/core-web-vitals"), // ใช้แยกเป็น array
-    ...compat.extends("next/typescript"),
-  ],
-  rules: {
-    "@typescript-eslint/no-unused-vars": "off", // ตัวอย่างการปิด rule
+export default [
+  ...compat.extends("next/core-web-vitals"),
+  ...compat.extends("next/typescript"),
+  {
+    rules: {
+      "@typescript-eslint/no-unused-vars": "off", // ปิดการแจ้งเตือน unused variables
+      "react/react-in-jsx-scope": "off", // สำหรับ React 17+
+    },
   },
-};
+];

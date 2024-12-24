@@ -4,7 +4,6 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-
 /*
 ** API Route (route.ts) ซึ่งถูกตั้งค่าไม่ถูกต้องใน Next.js 13+ (App Router) 
 ** เพราะ API Route ของ Next.js ต้องการ Named Export สำหรับแต่ละ HTTP Method 

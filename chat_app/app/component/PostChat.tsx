@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
@@ -6,7 +7,6 @@ import { useSession } from "next-auth/react";
 import { FilePath } from "tailwindcss/types/config";
 import { DialogDemo } from "./DialogDemo";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import { EditText } from "./EditMessage";
 
@@ -35,15 +35,14 @@ export default function PostChat({ data }: ChatProps) {
 
   console.log("CurrentUser:", currentUser);
 
-  const router = useRouter();
 
   useEffect(() => {
     //Pusher Configuration
-    let pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY as string, {
+    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY as string, {
       cluster: "ap1",
     });
 
-    let chanel = pusher.subscribe("my-channel");
+    const chanel = pusher.subscribe("my-channel");
     chanel.bind("my-event", function (data: any) {
       const parseComments = JSON.parse(data.message);
       // ตรวจสอบว่าข้อความซ้ำหรือไม่ ก่อนที่จะเพิ่มข้อมูล

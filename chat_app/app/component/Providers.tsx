@@ -10,13 +10,13 @@ import { SessionProvider } from "next-auth/react";
 export const NextAuthProvider = ({ children }: { children: ReactNode }) => {
   return (
     <>
-      {/* ใช้ SessionProvider เพื่อห่อ children ทั้งหมด
+      {/* /* ใช้ SessionProvider เพื่อห่อ children ทั้งหมด
              จัดการสถานะของ session ผู้ใช้
-        */}
-      {/*         
+        */
+      /*         
         ช่วยให้ Component สามารถเข้าถึงข้อมูล session ผ่าน hooks
          เช่น useSession() หรือ getSession() ได้ง่าย
-        */}
+        */ }
 
       <SessionProvider>{children}</SessionProvider>
     </>

@@ -1,14 +1,14 @@
 "use server";
 
 import { prisma } from "../../lib/db";
+import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../lib/auth";
 import { supabase } from "../../lib/supabaseClient";
+import Pusher from "pusher";
 
 export async function PostData(fromData: FormData) {
   "use server";
 
-  const Pusher = require("pusher");
 
   // ดึงค่าจาก FormData ที่มีชื่อฟิลด์ message และเก็บไว้ในตัวแปร message
   const message = fromData.get("message") as string | null ; // ส่ง message
@@ -80,9 +80,9 @@ export async function PostData(fromData: FormData) {
 
   // pusher configuration
   const pusher = new Pusher({
-    appId: process.env.PUSHER_APP_ID,
-    key: process.env.NEXT_PUBLIC_PUSHER_KEY,
-    secret: process.env.PUSHER_SECRET,
+    appId: process.env.PUSHER_APP_ID as string,
+    key: process.env.NEXT_PUBLIC_PUSHER_KEY as string,
+    secret: process.env.PUSHER_SECRET as string,
     cluster: "ap1",
     useTLS: true,
   });

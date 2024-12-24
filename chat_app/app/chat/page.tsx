@@ -1,11 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../lib/auth";
+import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import From from "../component/From";
 import PostChat from "../component/PostChat";
 import { prisma } from "../../lib/db";
-
 
 // get Data from DB
 async function getData() {
@@ -23,21 +23,21 @@ async function getData() {
       },
     },
     orderBy: {
-      createdAt: "asc", //get ข้อมูลตามเวลา 
+      createdAt: "asc", //get ข้อมูลตามเวลา
     },
   });
-// return
+  // return
   return data;
 }
 //Add
-export const dtnamic = "force-dynamic"
+export const dtnamic = "force-dynamic";
 
 export default async function ChatPage() {
   const session = await getServerSession(authOptions); // เก็บsession
   // get data
   const data = await getData();
   // console.log("Data:", data);
-  
+
   // ถ้าไม่มี session || redirect ไปหน้าHomepage
   if (!session) {
     redirect("/");
