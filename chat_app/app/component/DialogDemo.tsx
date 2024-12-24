@@ -16,24 +16,22 @@ interface DialogProps {
   deleteMessage: (id: string) => void; // ฟังก์ชันลบข้อความ
 }
 
-/*
- * ส่งprops components แม่เพื่อ รับค่าจาก components แม่ สำหรับสร้างfunction
- */
 export function DialogDemo({ messageId, deleteMessage }: DialogProps) {
-   const [isOpen, setIsOpen] = useState(false); // สถานะควบคุมการเปิด/ปิด Dialog
+  const [isOpen, setIsOpen] = useState(false); // สถานะควบคุมการเปิด/ปิด Dialog
 
-   const handleEdit = async () => {
+  const handleDelete = async () => {
     try {
-      await deleteMessage(messageId, ); // เรียกฟังก์ชันแก้ไขข้อความ
-      setIsOpen(false); // ปิด Dialog หลังจากแก้ไขสำเร็จ
+      await deleteMessage(messageId); // เรียกฟังก์ชันลบข้อความ
+      setIsOpen(false); // ปิด Dialog หลังจากลบข้อความสำเร็จ
     } catch (error) {
-      console.error("Error editing message:", error);
+      console.error("Error deleting message:", error);
     }
   };
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <button type="submit" className="mt-1.5 ">
+        <button type="button" className="mt-1.5">
           <IoTrashBin className="h-5 w-5" />
         </button>
       </DialogTrigger>
@@ -45,9 +43,8 @@ export function DialogDemo({ messageId, deleteMessage }: DialogProps) {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          {/* // เรียกฟังก์ชันลบข้อความ */}
-          <Button type="submit"
-           onClick={() => handleEdit}>
+          {/* เรียกฟังก์ชันลบข้อความ */}
+          <Button type="button" onClick={handleDelete}>
             <IoTrashBin />
             Delete
           </Button>
